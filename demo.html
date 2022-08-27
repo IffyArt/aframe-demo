@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  </head>
+  <body>
+    <script>
+      AFRAME.registerComponent('modify-materials', {
+        init: function () {
+          this.el.addEventListener('model-loaded', () => {
+            const obj = this.el.getObject3D('mesh');
+            obj.traverse((node) => {
+              if (node.name.indexOf('ship') !== -1) {
+                node.material.color.set('red');
+              }
+            });
+          });
+        },
+      });
+    </script>
+
+    <a-scene
+      background="color: #ECECEC"
+      inspector="https://cdn.jsdelivr.net/gh/aframevr/aframe-inspector@master/dist/aframe-inspector.min.js"
+    >
+      <a-assets>
+        <a-asset-item
+          id="cityModel"
+          src="praca_esporte_morro_da_garca/scene.gltf"
+        ></a-asset-item>
+      </a-assets>
+
+      <a-entity
+        gltf-model="#cityModel"
+        modify-materials
+        position="-60 0 20"
+      ></a-entity>
+    </a-scene>
+  </body>
+</html>
